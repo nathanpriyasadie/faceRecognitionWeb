@@ -1,54 +1,71 @@
 import Head from 'next/head'
+import { useState } from "react";
+import Upload from 'rc-upload';
 import styles from '../styles/Home.module.css'
 
+
+
 export default function Home() {
+  const [mediaPreview, setMediaPreview] = useState();
+  const [media, setMedia] = useState([]);
+
+  const onUploadMedia = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      let reader = new FileReader();
+      reader.readAsDataURL;
+      reader.onload = function (ev) {
+        setMediaPreview(ev.target.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      setMedia(e.target.files[0]);
+    }
+  };
+
+  function postImage() {
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      body: JSON.stringify({
+        title: 'foo',
+        body: 'bar',
+        userId: 1,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
+  }
+
   return (
     <div className={styles.container}>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+      <h1 className={styles.title}>
+        <a href="https://nextjs.org">Azure</a> Face Recognition
         </h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+      <p className={styles.description}>
+        by Harly, Hansen & Nathan
         </p>
+      {!mediaPreview && <input
+        type="file"
+        id="media-button"
+        onChange={onUploadMedia}
+        className={styles.imageCard}
+      />}
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+      {mediaPreview &&
+        <div
+          className={styles.imageCard}>
+          <img className={styles.preview} src={mediaPreview} />
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          <p className={styles.removeBtn} onClick={() => setMediaPreview()}>Remove</p>
         </div>
-      </main>
+
+      }
 
       <footer className={styles.footer}>
         <a
