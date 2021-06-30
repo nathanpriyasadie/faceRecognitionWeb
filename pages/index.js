@@ -1,9 +1,6 @@
 import Head from 'next/head'
 import { useState } from "react";
-import Upload from 'rc-upload';
 import styles from '../styles/Home.module.css'
-
-
 
 export default function Home() {
   const [mediaPreview, setMediaPreview] = useState();
@@ -44,29 +41,25 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1 className={styles.title}>
-        <a href="https://nextjs.org">Azure</a> Face Recognition
+        <a href="https://azure.microsoft.com/en-us/">Azure</a> Face Recognition
         </h1>
 
       <p className={styles.description}>
-        by Harly, Hansen & Nathan
+        by Harly, Hansen and Nathan
         </p>
-      {!mediaPreview && <input
-        type="file"
-        id="media-button"
-        onChange={onUploadMedia}
-        className={styles.imageCard}
-      />}
-
-      {mediaPreview &&
+      {mediaPreview ?
         <div
           className={styles.imageCard}>
           <img className={styles.preview} src={mediaPreview} />
 
           <p className={styles.removeBtn} onClick={() => setMediaPreview()}>Remove</p>
-        </div>
-
+        </div> : <input
+          type="file"
+          id="media-button"
+          onChange={onUploadMedia}
+          className={styles.imageCard}
+        />
       }
-
       <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
