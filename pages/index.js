@@ -34,27 +34,6 @@ export default function Home() {
     setMediaPreview()
   }
 
-  const demo = () => {
-    setFaces([{
-      faceRectangle: {
-        width: 70,
-        height: 70,
-        left: 191,
-        top: 111,
-      },
-      faceAttributes: {
-        age: 28,
-        facialHair: {
-          moustache: 0.1,
-          beard: 0.1,
-          sideburns: 0.1
-        },
-        gender: "male",
-        smile: 1,
-      }
-    }])
-  }
-
   const onSubmit = async () => {
     if (!media) return;
 
@@ -179,7 +158,7 @@ export default function Home() {
         </div>
         <div className={styles.footer}>
           {!faces
-            ? <p className={styles.submitBtn} onClick={demo}>Analyze</p>
+            ? <p className={styles.submitBtn} onClick={onSubmit}>Analyze</p>
             : <p className={styles.removeBtn} onClick={reset}>Remove</p>
           }
           <br/>Made Using:
