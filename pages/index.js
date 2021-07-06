@@ -40,7 +40,7 @@ export default function Home() {
     const data = new FormData()
     data.append("image", media)
     data.append("detection_model", model)
-    
+
     let response = await axios.post("/api/v1/face-detect", data, {
       'Content-type': 'multipart/form-data',
     })
@@ -52,7 +52,7 @@ export default function Home() {
     if (model === 'detection_01')
       return (
         <div className={styles.card}>
-          <b>Face {idx+1}</b>
+          <b>Face {idx + 1}</b>
           <table>
             <tr>
               <td>Age</td>
@@ -72,13 +72,13 @@ export default function Home() {
     if (model === 'detection_02')
       return (
         <div className={styles.card}>
-          <h3>No Attributes Available for this model</h3>
+          <p>No Attributes Available for this model</p>
         </div>
       )
     if (model === 'detection_03')
       return (
         <div className={styles.card}>
-          <b>Face {idx+1}</b>
+          <b>Face {idx + 1}</b>
           <table>
             <tr>
               <td>Roll</td>
@@ -107,43 +107,45 @@ export default function Home() {
         <h1 className={styles.title}>
           <a href="https://azure.microsoft.com/en-us/">Azure</a> Face Recognition
         </h1>
-        <p className={styles.description}>by Harly, Hansen, Nathan</p>
-        <div style={{position: 'relative'}}>
-          {faces && faces.map((face, idx) => {
-            const rect = face.faceRectangle
-            return <div style={{
-              position: 'absolute',
-              color: 'white',
-              border: '2px solid',
-              width: rect.width / mediaPreview.width * dim,
-              height: rect.height / mediaPreview.width * dim,
-              top: rect.top / mediaPreview.width * dim,
-              left: rect.left / mediaPreview.width * dim,
-            }}>Face {idx+1}</div>
-          })}
-          {mediaPreview &&
-            <img src={mediaPreview.src}
-              style={{
-                width: dim,
-                height: dim,
-              }}
-            />
-          }
+        <p className={styles.description}>Made for Mobile Technology & Cloud Computing Assignment</p>
+        <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+          <div style={{ position: 'relative' }}>
+            {faces && faces.map((face, idx) => {
+              const rect = face.faceRectangle
+              return <div style={{
+                position: 'absolute',
+                color: 'white',
+                border: '2px solid',
+                width: rect.width / mediaPreview.width * dim,
+                height: rect.height / mediaPreview.width * dim,
+                top: rect.top / mediaPreview.width * dim,
+                left: rect.left / mediaPreview.width * dim,
+              }}>Face {idx + 1}</div>
+            })}
+            {mediaPreview &&
+              <img src={mediaPreview.src}
+                style={{
+                  maxWidth: dim,
+                  maxHeight: dim,
+                }}
+              />
+            }
+          </div>
         </div>
       </div>
       <div className={styles.sidebar}>
-        
+
         <div className={styles.content}>
+          <h2>Result</h2>
           {faces ? (
             <div>
-              <h2>Result</h2>
               {faces.map(viewFaceCard)}
             </div>
           ) : (
             <div>
               <h2>Choose Image and Model</h2>
               <div className={styles.form}>
-                <span>
+                <span style={{ marginBottom: '1em' }}>
                   <label>Model: </label>
                   <select onChange={e => setModel(e.target.value)}>
                     <option>detection_01</option>
@@ -161,18 +163,28 @@ export default function Home() {
             ? <p className={styles.submitBtn} onClick={onSubmit}>Analyze</p>
             : <p className={styles.removeBtn} onClick={reset}>Remove</p>
           }
-          <br/>Made Using:
+          <br />
+          <div style={{ marginBottom: '0.8em', fontWeight: '500' }}>Made by</div>
+          <div className={styles.credit}>
+            William  Harly  : 2340081683
+            <br />
+            Hansen Riady Kwee : 2340081563
+            <br />
+            Nathan  Priyasadie : 2340081954
+          </div>
+          <div style={{ marginTop: '1em', fontWeight: '500' }}>Powered by</div>
+          <br />
           <div className={styles.tools}>
             <a href="https://azure.microsoft.com/en-us/">
-              <img src="/azure.svg" alt="Azure Logo" style={{height: '2.8em'}} />
+              <img src="/azure.svg" alt="Azure Logo" style={{ height: '2em' }} />
             </a>
             &nbsp;
             <a href="https://vercel.com">
-              <img src="/vercel.svg" alt="Vercel Logo" style={{height: '2em'}} />
+              <img src="/vercel.svg" alt="Vercel Logo" style={{ height: '1.5em' }} />
             </a>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
