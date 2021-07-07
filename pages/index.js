@@ -4,8 +4,6 @@ import { useState } from "react"
 
 import styles from '../styles/Home.module.css'
 
-
-
 export default function Home() {
   const [mediaPreview, setMediaPreview] = useState()
   const [media, setMedia] = useState()
@@ -47,6 +45,15 @@ export default function Home() {
     setFaces(response.data.data)
   }
 
+  const getEmotion = emotion => {
+    const keys = Object.keys(emotion)
+    let max = 0
+    for(var i = 1; i < keys.length; i++)
+      if (emotion[keys[max]] < emotion[keys[i]])
+        max = i
+    return keys[max]
+  }
+
   const viewFaceCard = (face, idx) => {
     const attributes = face.faceAttributes
     if (model === 'detection_01')
@@ -63,8 +70,12 @@ export default function Home() {
               <td>: {attributes.gender}</td>
             </tr>
             <tr>
-              <td>Smile</td>
-              <td>: {attributes.smile}</td>
+              <td>Blur</td>
+              <td>: {attributes.blur.blurLevel}</td>
+            </tr>
+            <tr>
+              <td>Emotion</td>
+              <td>: {getEmotion(attributes.emotion)}</td>
             </tr>
           </table>
         </div>
@@ -134,7 +145,6 @@ export default function Home() {
         </div>
       </div>
       <div className={styles.sidebar}>
-
         <div className={styles.content}>
           <h2>Result</h2>
           {faces ? (
@@ -166,10 +176,8 @@ export default function Home() {
           <br />
           <div style={{ marginBottom: '0.8em', fontWeight: '500' }}>Made by</div>
           <div className={styles.credit}>
-            William  Harly  : 2340081683
-            <br />
-            Hansen Riady Kwee : 2340081563
-            <br />
+            William  Harly  : 2340081683<br />
+            Hansen Riady Kwee : 2340081563<br />
             Nathan  Priyasadie : 2340081954
           </div>
           <div style={{ marginTop: '1em', fontWeight: '500' }}>Powered by</div>
