@@ -124,8 +124,8 @@ export default function Home() {
           {mediaPreview &&
             <img src={mediaPreview.src}
               style={{
-                width: dim,
-                height: dim,
+                maxWidth: dim,
+                maxHeight: dim,
               }}
             />
           }
